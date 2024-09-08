@@ -27,6 +27,17 @@ export default function Home() {
     }).then(() => fetchCategory());
   }
 
+  const deleteById = (id) => async () => {
+    console.log("delete", id);
+    
+    if (!confirm("Are you sure?")) return;
+    
+    await fetch(`http://localhost:3000/api/category/${id}`, {
+      method: "DELETE",
+    });
+    fetchCategory();
+  }
+  
   return (
     <main>
       <form onSubmit={handleSubmit(createCategory)}>
@@ -53,7 +64,7 @@ export default function Home() {
         <h1>Category ({categoryList.length})</h1>
         {categoryList.map((category) => (
           <div key={category._id}>
-            <Link href={`/product/category/${category._id}`} className="text-red-600">
+            <Link href={`/category`} className="text-red-600">
               {category.name}
             </Link>
           </div>
